@@ -28,29 +28,47 @@ public class StrOperations
         return Data;
     }
 
-    public int GetSimilarCount()
+    private string LettersRemove(string word)
     {
-        string[] splittedText = _text.Split(new char[] { '.', '!', '?'}, StringSplitOptions.RemoveEmptyEntries);
-        int counter = 0;
+        char badChar = word[word.Length - 1];
+        string result = "";
 
-        for (int i = 0; i < splittedText.Length; i++)
+        for (int i = 0; i < word.Length; i++)
         {
-            string[] words = splittedText[i].Split(new char[] { ' ', ',', '\n', '-'}, StringSplitOptions.RemoveEmptyEntries);
-            
-            HashSet<string> uniqueWords = new HashSet<string>();
+            if (char.ToLower(badChar) != char.ToLower(word[i]))  result += word[i];
+        }
+        result += badChar;
+        
+        return result;
+    }
+    
+    public string FilterLetters()
+    {
+        string currentWord = "";
+        string result = "";
 
-            foreach (string word in words)
+        for (int i = 0; i < Data.Length; i++)
+        {
+            char c = Data[i];
+            if (char.IsLetter(c))
             {
-                if (!uniqueWords.Add(word.ToLower()))
-                {
-                    counter++;
-                    break;
-                }
+                currentWord += c;
             }
+            else
+            {
+                if (currentWord.Length > 0)
+                {
+                    result += LettersRemove(currentWord);
+                    currentWord = "";
+                }
+                result += c;
+            }
+
+            
             
         }
-            
+        if (currentWord.Length > 0) result += LettersRemove(currentWord);
         
-        return counter;
+        return result;
     }
 }

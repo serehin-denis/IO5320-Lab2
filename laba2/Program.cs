@@ -4,6 +4,7 @@
     {
         static void Main()
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             string poem = "Я тобі галантно не вклонюся,\n" +
                           "Комплімента зроду не зліплю,\n" +
                           "Тільки в очі ніжні задивлюся,\n" +
@@ -24,7 +25,7 @@
             try
             {
                 StrOperations text = new StrOperations(poem);
-                Console.WriteLine($"Результат: {text.GetSimilarCount()}");
+                Console.WriteLine($"Результат: {text.FilterLetters()}");
             }
             catch(Exception ex)
             {
